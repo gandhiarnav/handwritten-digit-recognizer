@@ -5,6 +5,15 @@
 </head>
 <body>
     <h1>Handwritten Digit Recognizer</h1>
-    <p>Upload an image to predict the digit.</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" accept=".jpg,.png" required>
+        <br><br>
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if prediction is not none %}
+        <h2>This is most likely: {{ prediction }}</h2>
+    {% endif %}
 </body>
 </html>
