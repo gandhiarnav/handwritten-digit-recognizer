@@ -1,19 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Handwritten Digit Recognizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Handwritten Digit Recognizer</h1>
 
-    <form method="POST" enctype="multipart/form-data">
+<div class="container">
+    <h1>✍️ Handwritten Digit Recognizer</h1>
+    <p class="subtitle">
+        Upload an image of a handwritten digit (0–9)
+    </p>
+
+    <form method="POST" enctype="multipart/form-data" class="upload-box">
         <input type="file" name="image" accept=".jpg,.png" required>
-        <br><br>
         <button type="submit">Predict</button>
     </form>
 
     {% if prediction is not none %}
-        <h2>This is most likely: {{ prediction }}</h2>
+        <div class="result">
+            <span>This is most likely:</span>
+            <strong>{{ prediction }}</strong>
+        </div>
     {% endif %}
+</div>
+
+<footer>
+    <p>Built with Flask & CNN | MNIST Digit Classifier</p>
+</footer>
+
 </body>
 </html>

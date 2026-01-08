@@ -11,15 +11,26 @@ MODEL_PATH = "model/digit_model.h5"
 model = tf.keras.models.load_model(MODEL_PATH)
 
 def preprocess_image(image):
-    """
-    Preprocess uploaded image to match MNIST format
-    """
-    image = image.convert("L")            # Convert to grayscale
-    image = image.resize((28, 28))         # Resize to 28x28
-    image = np.array(image)                # Convert to NumPy array
-    image = image / 255.0                  # Normalize
-    image = image.reshape(1, 28, 28, 1)    # Reshape for CNN
+    # 1. Convert to grayscale
+    image = image.convert("L")
+
+    # 2. Resize (larger first for better thresholding)
+    image = image.resize((28, 28))
+
+    # 3. Convert to NumPy
+    image = np.array(image)
+
+    # 4. Invert colors (MNIST: white digit on black bg)
+    image = 255 - image
+
+    # 5. Normalize
+    image = image / 255.0
+
+    # 6. Reshape for CNN
+    image = image.reshape(1, 28, 28, 1)
+
     return image
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
